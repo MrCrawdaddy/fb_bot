@@ -1,4 +1,8 @@
 from django.db import models
 
 
-# Create your models here.
+# model will have
+# a user
+# a source
+# a frequency
+
