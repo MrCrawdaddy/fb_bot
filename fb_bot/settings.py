@@ -38,15 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
-=======
     'social.apps.django_app.default',
->>>>>>> 1421b5af2ac5a0e351a41ab6ca68c45589ddbe2a
 ]
 
 MIDDLEWARE_CLASSES = [
