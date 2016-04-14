@@ -18,5 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
     url(r'^accounts/', include('allauth.urls')),
+=======
+    url(r'^facebook/', include('social.apps.django_app.urls', namespace='social'))
+>>>>>>> 1421b5af2ac5a0e351a41ab6ca68c45589ddbe2a
 ]
