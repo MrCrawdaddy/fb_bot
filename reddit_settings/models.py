@@ -1,9 +1,9 @@
 from django.db import models
+from allauth.socialaccount.models import SocialAccount
 
 class Subreddit(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     url = models.URLField()
-
 
 class UserSetting(models.Model):
     subreddit = models.ForeignKey(
@@ -11,7 +11,7 @@ class UserSetting(models.Model):
         on_delete=models.CASCADE,
     )
     social_account = models.ForeignKey(
-        'SocialAccount',
+        SocialAccount,
         on_delete=models.CASCADE,
     )
     frequency = models.IntegerField()
