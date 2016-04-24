@@ -31,8 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'subreddit_pref.apps.SubredditPrefConfig',
-    'time_pref.apps.TimePrefConfig',
+    'preferences.apps.PreferencesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,4 +141,4 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = "/reddit-bot/"
+ACCOUNT_ADAPTER = 'fb_bot.users.adapter.MyAccountAdapter'
