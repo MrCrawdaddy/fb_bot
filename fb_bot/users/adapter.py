@@ -1,6 +1,7 @@
 from django.conf import settings
 from allauth.account.adapter import DefaultAccountAdapter
 from django.contrib.auth import models as auth_model
+from django.core.urlresolvers import reverse_lazy
 from preferences.models import UserPreferences
 
 class MyAccountAdapter(DefaultAccountAdapter):

@@ -1,4 +1,47 @@
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update" />
-</form>
+{% extends 'preferences/base.html' %} {% block content %}
+<div class="container">
+  {% if error_message %}
+  <p><strong>{{error_message}}</strong></p>
+  {% endif %}
+  <p>id: {{userpreferences.id}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Your Subreddits</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-group" action="index.html" method="post">
+          <ul class="list-group">
+            {% for sub in userpreferences.sub.all %}
+            <li class="list-group-item clearfix">{{ sub.name }}
+              <button class="btn btn-danger pull-right" type="button">Delete</button>
+            </li>
+            {% endfor %}
+          </ul>
+        </form>
+        <form class="form-group" action="index.html" method="post">
+          <button class="btn btn-success" type="button" name="button">Add More</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Hours between posts</h3>
+      </div>
+      <div class="form-group panel-body">
+        <form class="clearfix" action="update_time/" method="POST">{% csrf_token %}
+          <div class="">
+            <input type="range" class="pull-left" name="time" value="{{ userpreferences.time }}" min="1" max="24" oninput="outputUpdate(value)">
+            <label class="label label-info pull-right" for="time" id="output">hours: {{ userpreferences.time }}</label>
+          </div>
+          <input class="btn btn-success" type="submit" value="Update">
+        </form>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+  function outputUpdate(num) {
+    document.querySelector('#output').value = num;
+  }
+</script>
+{% endblock %}
