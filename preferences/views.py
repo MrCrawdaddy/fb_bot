@@ -14,7 +14,19 @@ class Profile(LoginRequiredMixin, DetailView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
 
-def update_subreddits(request, pk)
+def update_subreddits(request, pk):
+    userpreferences = get_object_or_404(UserPreferences, pk=pk)
+    try:
+        userpreferences.sub.add(request.POST['sub'])
+        userpreferences.save()
+    except(KeyError, UserPreferences.DoesNotExist):
+        return render(request, 'preferences/index.html', {
+            'userpreferences': userpreferences,
+            'error_message': str(KeyError),
+        })
+    else:
+        return HttpResponseRedirect(reverse_lazy('profile:profile',
+            args=[userpreferences.id]))
 
 def update_time(request, pk):
     userpreferences = get_object_or_404(UserPreferences, pk=pk)
