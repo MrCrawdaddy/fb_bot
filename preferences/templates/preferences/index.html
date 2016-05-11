@@ -1,27 +1,30 @@
 {% extends 'preferences/base.html' %} {% block content %}
 <div class="container">
-  {% if error_message %}
-  <p><strong>{{error_message}}</strong></p>
-  {% endif %}
+  {% block error %}
+  {% endblock %}
   <p>id: {{userpreferences.id}}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Your Subreddits</h3>
       </div>
       <div class="panel-body">
-        <form class="form-group" action="index.html" method="post">
           <ul class="list-group">
             {% for sub in userpreferences.sub.all %}
-            <li class="list-group-item clearfix">{{ sub.name }}
-              <button class="btn btn-danger pull-right" type="button">Delete</button>
+            <li class="list-group-item clearfix">
+              <form class="form-inline" action="delete_subreddit/" method="POST">{% csrf_token %}
+                <label>
+                  {{ sub.name }}
+                </label>
+                <input type="hidden" name="id" value="{{ sub.id }}">
+                <input class="btn btn-danger pull-right" type="submit" value="Delete">
+              </form>
             </li>
             {% endfor %}
           </ul>
-        </form>
-        <form class="form-inline" action="index.html" method="post">
+        <form class="form-inline" action="update_subreddits/" method="POST">{% csrf_token %}
           <div class="form-group">
-            <input type="text" name="subreddit" value="" class="form-control">
-            <button class="btn" type="button" name="add_button">+</button>
+            <input type="text" name="sub" value="" class="form-control">
+            <input class="btn" type="submit" value="+">
           </div>
         </form>
       </div>

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class SubChoice(models.Model):
     name = models.CharField(max_length=30)
-    url = models.URLField()
 
     def __str__(self):
         return self.name

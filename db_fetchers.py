@@ -39,7 +39,11 @@ class UserFetcher():
     def fetch_auth_users(self):
         query = "SELECT user_id FROM socialaccount_socialaccount"
         self.cursor.execute(query)
-        return self.cursor.fetchall()
+        results = self.cursor.fetchall()
+        id_list = []
+        for index in range(0, len(results)):
+            id_list.append(results[index][0])
+        return id_list
 
 
     def fetch_auth_token(self, user_id):

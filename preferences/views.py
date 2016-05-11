@@ -17,16 +17,31 @@ class Profile(LoginRequiredMixin, DetailView):
 def update_subreddits(request, pk):
     userpreferences = get_object_or_404(UserPreferences, pk=pk)
     try:
-        userpreferences.sub.add(request.POST['sub'])
+        sub = SubChoice()
+        sub.name = request.POST['sub']
+        sub.save()
+        userpreferences.sub.add(sub.id)
         userpreferences.save()
     except(KeyError, UserPreferences.DoesNotExist):
-        return render(request, 'preferences/index.html', {
-            'userpreferences': userpreferences,
-            'error_message': str(KeyError),
-        })
+        return HttpResponseRedirect(reverse_lazy('profile:profile',
+            args=[userpreferences.id]))
     else:
         return HttpResponseRedirect(reverse_lazy('profile:profile',
             args=[userpreferences.id]))
+
+
+def delete_subreddit(request, pk):
+    userpreferences = get_object_or_404(UserPreferences, pk=pk)
+    try:
+        sub = get_object_or_404(userpreferences.sub, id=request.POST['id'])
+        sub.delete()
+    except(KeyError, UserPreferences.DoesNotExist):
+        return HttpResponseRedirect(reverse_lazy('profile:profile',
+        args=['error']))
+    else:
+        return HttpResponseRedirect(reverse_lazy('profile:profile',
+            args=[userpreferences.id]))
+
 
 def update_time(request, pk):
     userpreferences = get_object_or_404(UserPreferences, pk=pk)
@@ -34,10 +49,8 @@ def update_time(request, pk):
         userpreferences.time = request.POST['time']
         userpreferences.save()
     except (KeyError, UserPreferences.DoesNotExist):
-        return render(request, 'preferences/index.html', {
-            'userpreferences': userpreferences,
-            'error_message': str(KeyError),
-        })
+        return HttpResponseRedirect(reverse_lazy('profile:profile',
+            args=[userpreferences.id]))
     else:
         return HttpResponseRedirect(reverse_lazy('profile:profile',
             args=[userpreferences.id]))
